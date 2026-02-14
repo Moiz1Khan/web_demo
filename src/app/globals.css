@@ -1,0 +1,323 @@
+@import "tailwindcss";
+
+/* Holo-inspired: Black, White, Glass Effect */
+:root {
+  --background: #ffffff;
+  --foreground: #000000;
+  --muted: #6c757d;
+  --muted-foreground: #495057;
+  --card: #ffffff;
+  --card-foreground: #000000;
+  --primary: #000000;
+  --primary-foreground: #ffffff;
+  --secondary: #6c757d;
+  --border: #dee2e6;
+  --accent: #6c757d;
+  --input: #e9ecef;
+  --ring: #000000;
+  --glass: rgba(220, 230, 240, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.3);
+}
+
+.dark {
+  --background: #0a0a12;
+  --foreground: #ffffff;
+  --muted: #6c757d;
+  --muted-foreground: #a1a1aa;
+  --card: #12121a;
+  --card-foreground: #ffffff;
+  --primary: #ffffff;
+  --primary-foreground: #0a0a12;
+  --secondary: #1e1e2e;
+  --border: #27272a;
+  --accent: #6c757d;
+  --input: #1e1e2e;
+  --ring: #ffffff;
+  --glass: rgba(18, 18, 26, 0.9);
+  --glass-border: rgba(255, 255, 255, 0.08);
+}
+
+/* Starlight / galaxy black - unified dark background */
+.starlight {
+  --background: #0a0a12;
+  --foreground: #ffffff;
+  --card: #12121a;
+  --border: #27272a;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Prevent sticky header from overlapping on anchor navigation */
+[id] {
+  scroll-margin-top: 6rem;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+/* Glass effect utility */
+.glass {
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+}
+
+/* Navbar pill - transparent glass so background shows through */
+.navbar-pill {
+  background: rgba(79, 98, 122, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--border);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--muted);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted-foreground);
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-33.333%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 25s linear infinite;
+}
+
+@keyframes logo-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-logo-scroll {
+  animation: logo-scroll 25s linear infinite;
+  will-change: transform;
+}
+
+/* Animation utilities */
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+  .will-change-transform {
+    will-change: transform;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─── Futuristic Effects ─── */
+
+/* Glow utilities */
+.glow-primary {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15), 0 0 40px rgba(0, 0, 0, 0.08);
+}
+.dark .glow-primary {
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+}
+
+.glow-white {
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3), 0 0 40px rgba(255, 255, 255, 0.15);
+}
+
+.glow-subtle {
+  box-shadow: 0 0 60px -20px rgba(0, 0, 0, 0.25);
+}
+
+/* Gradient text */
+.text-gradient {
+  background: linear-gradient(135deg, #000 0%, #333 50%, #000 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.dark .text-gradient {
+  background: linear-gradient(135deg, #fff 0%, #aaa 50%, #fff 100%);
+  background-size: 200% 200%;
+}
+
+.text-gradient-accent {
+  background: linear-gradient(90deg, #000, #444, #000);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-shift 4s ease infinite;
+}
+.dark .text-gradient-accent {
+  background: linear-gradient(90deg, #fff, #888, #fff);
+  background-size: 200% auto;
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% center; }
+  50% { background-position: 100% center; }
+}
+
+/* Animated gradient border (shimmer) */
+.border-gradient-wrap {
+  position: relative;
+  background: var(--card);
+  border-radius: inherit;
+}
+.border-gradient-wrap::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, transparent 0%, rgba(0,0,0,0.2) 25%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.2) 75%, transparent 100%);
+  background-size: 300% 300%;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: border-shimmer 6s ease infinite;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.border-gradient-wrap:hover::before {
+  opacity: 1;
+}
+.dark .border-gradient-wrap::before {
+  background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.15) 25%, rgba(255,255,255,0.35) 50%, rgba(255,255,255,0.15) 75%, transparent 100%);
+  background-size: 300% 300%;
+}
+
+@keyframes border-shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Shine sweep on hover */
+.shine-sweep {
+  position: relative;
+  overflow: hidden;
+}
+.shine-sweep::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.12) 45%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0.12) 55%, transparent 60%);
+  background-size: 200% 100%;
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+.shine-sweep:hover::after {
+  transform: translateX(100%);
+}
+
+/* Grid overlay - futuristic background */
+.grid-overlay {
+  background-image:
+    linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.dark .grid-overlay {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+}
+
+/* Subtle noise texture */
+.noise-overlay {
+  position: relative;
+}
+.noise-overlay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+/* Floating orb / blob gradient */
+.orb-glow {
+  background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0,0,0,0.12), transparent);
+}
+.dark .orb-glow {
+  background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(255,255,255,0.08), transparent);
+}
+
+/* Scroll progress bar */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary), var(--muted));
+  z-index: 100;
+  transform-origin: left;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .border-gradient-wrap::before,
+  .text-gradient-accent {
+    animation: none !important;
+  }
+}
