@@ -28,12 +28,12 @@ const benefits = [
 
 export function WhyChoose() {
   return (
-    <section className="py-16 md:py-24 bg-[#0a0a12]" data-reveal>
+    <section className="py-10 md:py-14 bg-transparent" data-reveal>
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
           Why choose us?
         </h2>
-        <p className="text-muted-foreground text-center max-w-2xl mx-auto mb-12">
+        <p className="text-muted-foreground text-center max-w-2xl mx-auto mb-8">
           We focus on creating an empowering experience for buyers. Here&apos;s why
           we&apos;re the go-to choice:
         </p>

@@ -31,19 +31,18 @@ const testimonials = [
 
 export function Testimonials() {
   return (
-    <section className="py-16 md:py-24 relative overflow-hidden bg-[#0a0a12]" data-reveal>
+    <section className="py-10 md:py-14 relative overflow-hidden bg-transparent" data-reveal>
       <div className="absolute inset-0">
         <Image
           src={images.testimonialBg}
           alt=""
           fill
-          className="object-cover brightness-110 contrast-105"
+          className="object-cover"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-[#0a0a12]/55" />
       </div>
       <div className="relative max-w-7xl mx-auto px-4 md:px-8">
-        <div className="text-center mb-12">
+        <div className="text-center mb-8">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Tried. Tested. Trusted.
           </h2>

@@ -131,7 +131,7 @@ export default function Stepper({
               {currentStep !== 1 && (
                 <button
                   onClick={handleBack}
-                  className="rounded-full border border-border bg-transparent px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-secondary/20"
+                  className="rounded-full border-2 border-[#28303a] bg-transparent px-5 py-2.5 text-sm font-medium text-[#28303a] transition-colors hover:bg-[#28303a]/10"
                   {...backButtonProps}
                 >
                   {backButtonText}
@@ -139,7 +139,7 @@ export default function Stepper({
               )}
               <button
                 onClick={isLastStep ? handleComplete : handleNext}
-                className="rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:opacity-90"
+                className="rounded-full bg-[#28303a] px-5 py-2.5 text-sm font-medium text-white shadow-[0_4px_14px_rgba(0,0,0,0.2)] transition-all hover:bg-[#323d48] hover:shadow-[0_6px_18px_rgba(0,0,0,0.25)]"
                 {...nextButtonProps}
               >
                 {isLastStep ? "Complete" : nextButtonText}

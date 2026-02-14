@@ -12,15 +12,15 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = "primary", size = "md", asChild, children, ...props }, ref) => {
     const Comp = asChild ? "span" : "button";
     const classes = cn(
-      "inline-flex items-center justify-center font-medium transition-all duration-200 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50 cursor-pointer relative overflow-hidden",
+      "inline-flex items-center justify-center font-medium transition-all duration-200 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50 cursor-pointer relative overflow-hidden shadow-[0_4px_14px_rgba(0,0,0,0.2)]",
       {
-        "bg-primary text-primary-foreground hover:bg-black/90 hover:opacity-90":
+        "bg-gradient-to-b from-[#323d48] via-[#28303a] to-[#222a34] text-white hover:from-[#3a4652] hover:via-[#323d48] hover:to-[#28303a] hover:shadow-[0_6px_18px_rgba(0,0,0,0.25)] active:shadow-[0_2px_8px_rgba(0,0,0,0.2)]":
           variant === "primary",
-        "bg-[#6c757d] text-white hover:bg-[#5a6268]":
+        "bg-gradient-to-b from-[#323d48] via-[#28303a] to-[#222a34] text-white hover:from-[#3a4652] hover:via-[#323d48] hover:to-[#28303a]":
           variant === "secondary",
-        "border-2 border-black bg-white text-black hover:bg-gray-100 dark:border-white dark:bg-transparent dark:text-white dark:hover:bg-white/10":
+        "border-2 border-[#28303a] bg-transparent text-[#28303a] hover:bg-[#28303a]/10 shadow-none":
           variant === "outline",
-        "text-foreground hover:bg-secondary/50": variant === "ghost",
+        "text-foreground hover:bg-secondary/50 shadow-none": variant === "ghost",
       },
       {
         "h-9 px-4 text-sm": size === "sm",

@@ -37,9 +37,9 @@ export function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="py-16 md:py-24 bg-[#0a0a12]" data-reveal>
+    <section id="faq" className="py-10 md:py-14 bg-transparent" data-reveal>
       <div className="max-w-3xl mx-auto px-4 md:px-8">
-        <div className="text-center mb-12">
+        <div className="text-center mb-8">
           <div className="inline-flex p-3 rounded-xl bg-primary/10 mb-4">
             <HelpCircle className="size-8 text-primary" />
           </div>
@@ -58,7 +58,7 @@ export function FAQ() {
               className={cn(
                 "border-gradient-wrap shine-sweep bg-card border rounded-2xl overflow-hidden transition-all duration-300",
                 openIndex === index
-                  ? "border-primary/30 shadow-[0_0_20px_rgba(132,0,255,0.08)]"
+                  ? "border-primary/30 shadow-[0_0_20px_rgba(40,48,58,0.08)]"
                   : "border-border hover:border-primary/20"
               )}
             >

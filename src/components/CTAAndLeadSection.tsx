@@ -20,7 +20,7 @@ export function CTAAndLeadSection() {
 
   if (submitted) {
     return (
-      <section id="contact" className="py-10 md:py-14 bg-[#0a0a12]" data-reveal>
+      <section id="contact" className="py-8 md:py-10 bg-transparent" data-reveal>
         <div className="max-w-xl mx-auto px-4 md:px-8 text-center">
           <h2 className="text-2xl md:text-3xl font-bold mb-4">Thank you!</h2>
           <p className="text-muted-foreground">
@@ -32,7 +32,7 @@ export function CTAAndLeadSection() {
   }
 
   return (
-    <section id="contact" className="py-10 md:py-14 bg-[#0a0a12]" data-reveal>
+    <section id="contact" className="py-8 md:py-10 bg-transparent" data-reveal>
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-center">
           {/* Left: Ready to own your Dubai home? */}
@@ -53,10 +53,10 @@ export function CTAAndLeadSection() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <Button asChild size="lg">
-                <a href="#calculator" data-magnetic>Get Started</a>
+                <a href="#calculator">Get Started</a>
               </Button>
               <Button asChild variant="outline" size="lg">
-                <a href="#contact" data-magnetic>Get My Exact Rate Quote</a>
+                <a href="#contact">Get My Exact Rate Quote</a>
               </Button>
             </div>
           </motion.div>

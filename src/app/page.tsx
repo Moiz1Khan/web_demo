@@ -1,31 +1,36 @@
-import { StickyBar } from "@/components/StickyBar";
+import dynamic from "next/dynamic";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { TrustBar } from "@/components/TrustBar";
 import { WhyChoose } from "@/components/WhyChoose";
 import { MortgageCalculator } from "@/components/MortgageCalculator";
-import { Process } from "@/components/Process";
-import { CaseStudies } from "@/components/CaseStudies";
 import { RatesTable } from "@/components/RatesTable";
 import { EligibilityChecklist } from "@/components/EligibilityChecklist";
-import { Testimonials } from "@/components/Testimonials";
 import { FAQ } from "@/components/FAQ";
-import { BlogSection } from "@/components/BlogSection";
 import { CTAAndLeadSection } from "@/components/CTAAndLeadSection";
 import { Footer } from "@/components/Footer";
-import { ScrollAnimations } from "@/components/ScrollAnimations";
 import { ScrollProgress } from "@/components/ScrollProgress";
+
+const Process = dynamic(() => import("@/components/Process").then((m) => ({ default: m.Process })), { ssr: true });
+const CaseStudies = dynamic(() => import("@/components/CaseStudies").then((m) => ({ default: m.CaseStudies })), { ssr: true });
+const Testimonials = dynamic(() => import("@/components/Testimonials").then((m) => ({ default: m.Testimonials })), { ssr: true });
+
+const BlogSection = dynamic(() => import("@/components/BlogSection").then((m) => ({ default: m.BlogSection })), {
+  ssr: true,
+  loading: () => <section className="py-10 md:py-14 bg-transparent min-h-[400px]" />,
+});
+
+const ScrollAnimations = dynamic(() => import("@/components/ScrollAnimations").then((m) => ({ default: m.ScrollAnimations })));
 
 export default function Home() {
   return (
     <>
       <ScrollAnimations />
       <ScrollProgress />
-      <StickyBar />
-      <div className="pt-12">
-        <Header />
+      <Header />
         <main>
           <Hero />
+          <div className="theme-gradient">
           <TrustBar />
           <WhyChoose />
           <MortgageCalculator />
@@ -37,9 +42,9 @@ export default function Home() {
           <FAQ />
           <BlogSection />
           <CTAAndLeadSection />
+          <Footer />
+          </div>
         </main>
-        <Footer />
-      </div>
     </>
   );
 }

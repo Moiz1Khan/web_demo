@@ -25,9 +25,9 @@ const selfEmployed = [
 
 export function EligibilityChecklist() {
   return (
-    <section className="py-16 md:py-24 bg-[#0a0a12]" data-reveal>
+    <section className="py-10 md:py-14 bg-transparent" data-reveal>
       <div className="max-w-7xl mx-auto px-4 md:px-8" data-reveal>
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">
           Home Loan Eligibility Checklist
         </h2>
 

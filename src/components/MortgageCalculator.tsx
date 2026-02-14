@@ -1,13 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-
-const Orb = dynamic(() => import("./Orb").then((m) => m.default), {
-  ssr: false,
-});
 
 const residencyTypes = ["UAE Resident", "UAE National", "Non-Resident"] as const;
 
@@ -43,16 +38,8 @@ export function MortgageCalculator() {
   );
 
   return (
-    <section id="calculator" className="relative py-16 md:py-24 overflow-hidden" data-reveal>
-      <div className="absolute inset-0 -z-10">
-        <Orb
-          hoverIntensity={2}
-          rotateOnHover
-          hue={0}
-          forceHoverState={false}
-          backgroundColor="#0a0a12"
-        />
-      </div>
+    <section id="calculator" className="relative py-10 md:py-14 overflow-hidden bg-transparent" data-reveal>
+      <div className="absolute inset-0 -z-10 [background:radial-gradient(ellipse_80%_50%_at_50%_0%,rgba(40,48,58,0.06),transparent_50%)]" aria-hidden />
       <div className="max-w-7xl mx-auto px-4 md:px-8 relative">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-2">
           See Your Real Monthly Payment

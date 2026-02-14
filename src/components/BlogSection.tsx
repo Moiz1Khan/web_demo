@@ -1,17 +1,17 @@
 "use client";
 
 import Image from "next/image";
-import MagicBento from "./MagicBento";
+import { BlogGrid } from "./BlogGrid";
 import { images } from "@/lib/media";
 
 export function BlogSection() {
   return (
-    <section className="py-16 md:py-24 bg-[#0a0a12]" data-reveal>
+    <section className="py-10 md:py-14 bg-transparent">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
           Latest from our blog
         </h2>
-        <p className="text-muted-foreground text-center mb-12 max-w-2xl mx-auto">
+        <p className="text-muted-foreground text-center mb-8 max-w-2xl mx-auto">
           Expert insights on UAE mortgages, market trends, and home buying tips.
         </p>
 
@@ -29,42 +29,29 @@ export function BlogSection() {
               />
               {/* Gradient overlay - subtle, dark at bottom */}
               <div
-                className="absolute inset-0 bg-gradient-to-t from-[#0a0a12]/80 via-transparent to-transparent opacity-80"
+                className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-80"
                 aria-hidden
               />
               {/* Subtle purple glow border on hover */}
               <div
-                className="absolute inset-0 rounded-2xl ring-2 ring-white/0 group-hover:ring-[rgba(132,0,255,0.4)] transition-all duration-500 pointer-events-none"
+                className="absolute inset-0 rounded-2xl ring-2 ring-transparent group-hover:ring-primary/40 transition-all duration-500 pointer-events-none"
                 aria-hidden
               />
             </div>
             {/* Decorative accent - floating corner */}
             <div
-              className="absolute -bottom-3 -right-3 w-24 h-24 rounded-2xl border border-white/10 bg-[#0a0a12]/60 backdrop-blur-sm -z-10"
+              className="absolute -bottom-3 -right-3 w-24 h-24 rounded-2xl border border-white/10 bg-background/60 backdrop-blur-sm -z-10"
               aria-hidden
             />
             <div
-              className="absolute -top-4 -left-4 w-16 h-16 rounded-xl border border-[rgba(132,0,255,0.3)] bg-[rgba(132,0,255,0.05)] -z-10"
+              className="absolute -top-4 -left-4 w-16 h-16 rounded-xl border border-primary/30 bg-primary/5 -z-10"
               aria-hidden
             />
           </div>
 
           {/* Right: Bento grid */}
           <div className="order-2 lg:order-2 flex justify-center lg:justify-end">
-            <MagicBento
-              textAutoHide
-              enableStars
-              enableSpotlight
-              enableBorderGlow
-              enableTilt={false}
-              enableMagnetism={false}
-              clickEffect
-              spotlightRadius={400}
-              particleCount={12}
-              glowColor="132, 0, 255"
-              disableAnimations={false}
-              gridClassName="max-w-full w-full lg:max-w-none"
-            />
+            <BlogGrid />
           </div>
         </div>
       </div>
