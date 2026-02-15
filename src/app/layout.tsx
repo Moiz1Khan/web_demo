@@ -42,9 +42,9 @@ export default function RootLayout({
         />
         <Script
           id="strip-extension-attrs"
-          strategy="afterInteractive"
+          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
-            __html: `(function(){function r(){document.querySelectorAll("[fdprocessedid]").forEach(function(e){e.removeAttribute("fdprocessedid")})}if(document.readyState!=="loading")r();else document.addEventListener("DOMContentLoaded",r);setTimeout(r,100)})();`,
+            __html: `(function(){function r(){document.querySelectorAll("[fdprocessedid]").forEach(function(e){e.removeAttribute("fdprocessedid")})}r();var o=new MutationObserver(function(){r()});document.documentElement&&o.observe(document.documentElement,{attributes:true,attributeFilter:["fdprocessedid"],subtree:true});setTimeout(function(){r();o.disconnect()},500)})();`,
           }}
         />
         <ThemeProvider>

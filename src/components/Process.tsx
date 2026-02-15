@@ -78,21 +78,23 @@ export function Process() {
             >
               {phases.map((phase) => (
                 <Step key={phase.days}>
-                  <div className="w-full max-w-md mx-auto text-center">
-                    <div className="mb-6">
-                      <span className="font-mono text-sm font-bold text-primary">
+                  <div className="w-full">
+                    <div className="text-center mb-8">
+                      <span className="inline-block font-mono text-sm font-bold text-primary bg-primary/10 px-3 py-1 rounded-lg mb-2">
                         {phase.days}
                       </span>
-                      <h3 className="text-xl font-semibold mt-1">{phase.title}</h3>
+                      <h3 className="text-2xl md:text-3xl font-bold text-foreground">{phase.title}</h3>
                     </div>
-                    <ul className="space-y-2.5 text-left inline-block">
-                      {phase.items.map((item) => (
+                    <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+                      {phase.items.map((item, i) => (
                         <li
                           key={item}
-                          className="flex items-start gap-3 text-muted-foreground"
+                          className="flex items-start gap-3 p-4 rounded-xl bg-secondary/50 border border-border/60"
                         >
-                          <span className="text-primary shrink-0">•</span>
-                          <span>{item}</span>
+                          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground text-sm font-bold">
+                            {i + 1}
+                          </span>
+                          <span className="text-foreground font-medium leading-snug pt-0.5">{item}</span>
                         </li>
                       ))}
                     </ul>

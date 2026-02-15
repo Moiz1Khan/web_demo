@@ -2,18 +2,18 @@ import Link from "next/link";
 import { Facebook, Youtube, Twitter, Instagram, Linkedin } from "lucide-react";
 
 const companyLinks = [
-  { href: "#", label: "About Us" },
-  { href: "#", label: "FAQ" },
+  { href: "/about", label: "About Us" },
+  { href: "/faq", label: "FAQ" },
+  { href: "/reviews", label: "Reviews" },
+  { href: "/blog", label: "Blog" },
   { href: "#", label: "Privacy Policy" },
-  { href: "#", label: "Blog" },
-  { href: "#", label: "Guides" },
 ];
 
 const resourceLinks = [
-  { href: "#calculator", label: "Mortgages" },
-  { href: "#rates", label: "Rates" },
-  { href: "#calculator", label: "Mortgage Calculator" },
-  { href: "#contact", label: "Get Quote" },
+  { href: "/#calculator", label: "Mortgages" },
+  { href: "/#rates", label: "Rates" },
+  { href: "/#calculator", label: "Mortgage Calculator" },
+  { href: "/#contact", label: "Get Quote" },
 ];
 
 const socialLinks = [

@@ -1,10 +1,19 @@
 "use client";
 
 import { useState, useRef } from "react";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
-import CardSwap, { Card } from "./CardSwap";
 import { images } from "@/lib/media";
+
+const CardSwap = dynamic(
+  () => import("./CardSwap").then((m) => ({ default: m.default })),
+  { ssr: false }
+);
+const Card = dynamic(
+  () => import("./CardSwap").then((m) => ({ default: m.Card })),
+  { ssr: false }
+);
 
 const caseStudies = [
   {
@@ -104,7 +113,7 @@ export function CaseStudies() {
             ))}
           </div>
 
-          {/* Right: CardSwap - cards appear when section is in view */}
+          {/* Right: CardSwap - loads only when section in view (defers GSAP bundle) */}
           <motion.div
             className="relative h-[380px] md:h-[480px] min-w-0 flex items-end justify-end overflow-visible"
             initial={{ opacity: 0, scale: 0.9, x: 30 }}
@@ -115,6 +124,7 @@ export function CaseStudies() {
             }
             transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
+            {isInView && (
             <CardSwap
               ref={cardSwapRef}
               width={340}
@@ -169,6 +179,7 @@ export function CaseStudies() {
                 </Card>
               ))}
             </CardSwap>
+            )}
           </motion.div>
         </div>
       </div>

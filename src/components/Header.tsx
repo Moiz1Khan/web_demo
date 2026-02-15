@@ -2,14 +2,16 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import { throttle } from "@/lib/utils";
 
 const navLinks = [
-  { href: "#process", label: "Features", dropdown: true },
-  { href: "#calculator", label: "Solutions", dropdown: true },
-  { href: "#faq", label: "Resources", dropdown: true },
-  { href: "#rates", label: "Rates", dropdown: false },
-  { href: "#calculator", label: "Calculator", dropdown: false },
+  { href: "/about", label: "About Us" },
+  { href: "/faq", label: "FAQ" },
+  { href: "/reviews", label: "Reviews" },
+  { href: "/blog", label: "Blog" },
+  { href: "/#rates", label: "Rates" },
+  { href: "/#calculator", label: "Calculator" },
 ];
 
 export function Header() {
@@ -18,9 +20,10 @@ export function Header() {
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 100);
+    const throttled = throttle(onScroll, 100);
     onScroll();
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("scroll", throttled, { passive: true });
+    return () => window.removeEventListener("scroll", throttled);
   }, []);
 
   const overVideo = !scrolled;
@@ -53,7 +56,6 @@ export function Header() {
               className={`flex items-center gap-0.5 px-4 py-2 font-medium text-sm rounded-lg transition-colors ${textClass} ${linkHover}`}
             >
               {link.label}
-              {link.dropdown && <ChevronDown className={`size-4 ${overVideo ? "text-white/80" : "text-muted-foreground"}`} />}
             </Link>
           ))}
         </div>
@@ -63,7 +65,7 @@ export function Header() {
           <Link href="/admin" className={`hidden sm:inline font-medium text-sm hover:opacity-80 transition-opacity ${textClass}`}>
             Log In
           </Link>
-          <Link href="#calculator" className={`hidden sm:inline-flex px-5 py-2.5 rounded-xl text-sm font-semibold shadow-sm hover:bg-white hover:shadow transition-all ${btnClass}`}>
+          <Link href="/#calculator" className={`hidden sm:inline-flex px-5 py-2.5 rounded-xl text-sm font-semibold shadow-sm hover:bg-white hover:shadow transition-all ${btnClass}`}>
             Get started
           </Link>
           <button className="lg:hidden p-2 -mr-1" onClick={() => setMobileOpen(!mobileOpen)} aria-label="Toggle menu">
@@ -84,14 +86,13 @@ export function Header() {
                 className={`flex items-center justify-between px-4 py-3 font-medium rounded-xl ${textClass} ${linkHover}`}
               >
                 {link.label}
-                {link.dropdown && <ChevronDown className={`size-4 ${overVideo ? "text-white/80" : "text-muted-foreground"}`} />}
               </Link>
             ))}
             <div className={`border-t my-2 ${overVideo ? "border-white/20" : "border-gray-300/50"}`} />
             <Link href="/admin" onClick={() => setMobileOpen(false)} className={`px-4 py-3 font-medium ${textClass}`}>
               Log In
             </Link>
-            <Link href="#calculator" onClick={() => setMobileOpen(false)} className="mt-2 px-5 py-3 rounded-full bg-[#28303a] text-white font-semibold text-center shadow-[0_4px_14px_rgba(0,0,0,0.2)] hover:bg-[#323d48]">
+            <Link href="/#calculator" onClick={() => setMobileOpen(false)} className="mt-2 px-5 py-3 rounded-full bg-[#28303a] text-white font-semibold text-center shadow-[0_4px_14px_rgba(0,0,0,0.2)] hover:bg-[#323d48]">
               Get started
             </Link>
           </nav>

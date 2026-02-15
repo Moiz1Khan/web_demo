@@ -8,6 +8,9 @@ gsap.registerPlugin(ScrollTrigger);
 
 export function ScrollAnimations() {
   useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
     let ctx: gsap.Context | null = null;
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {

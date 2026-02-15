@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { throttle } from "@/lib/utils";
 
 export function ScrollProgress() {
   const [progress, setProgress] = useState(0);
@@ -11,10 +12,11 @@ export function ScrollProgress() {
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
       setProgress(docHeight > 0 ? Math.min((scrollTop / docHeight) * 100, 100) : 0);
     }
+    const throttled = throttle(updateProgress, 50);
 
     updateProgress();
-    window.addEventListener("scroll", updateProgress, { passive: true });
-    return () => window.removeEventListener("scroll", updateProgress);
+    window.addEventListener("scroll", throttled, { passive: true });
+    return () => window.removeEventListener("scroll", throttled);
   }, []);
 
   return (

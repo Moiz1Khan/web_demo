@@ -7,7 +7,7 @@ import { images, videos } from "@/lib/media";
 
 export function Hero() {
   return (
-    <section className="relative min-h-[85vh] flex flex-col items-start justify-center pl-2 md:pl-4 lg:pl-6 pr-4 pt-36 md:pt-40 pb-16 overflow-hidden">
+    <section className="relative min-h-screen flex flex-col items-start justify-center pl-2 md:pl-4 lg:pl-6 pr-4 pt-36 md:pt-40 pb-16 overflow-hidden">
       <div className="absolute inset-0">
         <div className="absolute inset-0">
           <video
