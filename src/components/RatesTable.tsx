@@ -6,28 +6,34 @@ import { TrendingDown, Wallet, Calendar } from "lucide-react";
 
 const rates = [
   {
-    propertyValue: "Under AED 1M",
-    fixedRate: "4.99% - 5.49%",
-    variableRate: "4.49% - 4.99%",
-    downPayment: "25%",
+    who: "UAE National",
+    fixed: "4.15% - 5.29%",
+    variable: "3.85% - 4.99%",
+    down: "15-20%",
   },
   {
-    propertyValue: "AED 1M - 3M",
-    fixedRate: "4.49% - 5.29%",
-    variableRate: "3.99% - 4.79%",
-    downPayment: "25%",
+    who: "UAE Non-Resident",
+    fixed: "4.25% - 5.49%",
+    variable: "3.99% - 5.15%",
+    down: "20-25%",
   },
   {
-    propertyValue: "AED 3M - 5M",
-    fixedRate: "4.25% - 5.15%",
-    variableRate: "3.99% - 4.49%",
-    downPayment: "20-25%",
+    who: "First-Time Buyer",
+    fixed: "4.35% - 5.39%",
+    variable: "4.09% - 5.05%",
+    down: "20%",
   },
   {
-    propertyValue: "Over AED 5M",
-    fixedRate: "4.15% - 4.99%",
-    variableRate: "3.85% - 4.25%",
-    downPayment: "15-20%",
+    who: "Non-Resident",
+    fixed: "4.75% - 6.25%",
+    variable: "4.25% - 5.75%",
+    down: "40-50%",
+  },
+  {
+    who: "Commercial Property",
+    fixed: "4.99% - 6.75%",
+    variable: "4.49% - 6.25%",
+    down: "35-50%",
   },
 ];
 
@@ -40,14 +46,11 @@ export function RatesTable() {
             <TrendingDown className="size-8 text-primary" />
           </div>
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            What You&apos;ll Actually Pay
+            Current Mortgage Rates in Dubai
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto mb-2">
-            Live rates from 15+ UAE banks. Updated weekly.
-          </p>
-          <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary border border-primary/20">
             Updated Weekly
-          </span>
+          </p>
         </div>
 
         <motion.div
@@ -63,11 +66,11 @@ export function RatesTable() {
                 <th className="text-left p-4 md:p-5 font-semibold">
                   <span className="flex items-center gap-2">
                     <Wallet className="size-4 text-primary" />
-                    Property Value
+                    Who You Are
                   </span>
                 </th>
                 <th className="text-left p-4 md:p-5 font-semibold">
-                  Fixed Rate (3-5Y)
+                  Fixed Rate (3-5 Years)
                 </th>
                 <th className="text-left p-4 md:p-5 font-semibold">
                   Variable Rate
@@ -83,22 +86,22 @@ export function RatesTable() {
             <tbody>
               {rates.map((row, index) => (
                 <motion.tr
-                  key={row.propertyValue}
+                  key={row.who}
                   className="border-b border-border last:border-0 hover:bg-secondary/20 transition-colors"
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.3, delay: index * 0.05 }}
                 >
-                  <td className="p-4 md:p-5 font-medium">{row.propertyValue}</td>
+                  <td className="p-4 md:p-5 font-medium">{row.who}</td>
                   <td className="p-4 md:p-5 text-muted-foreground">
-                    {row.fixedRate}
+                    {row.fixed}
                   </td>
                   <td className="p-4 md:p-5 text-muted-foreground">
-                    {row.variableRate}
+                    {row.variable}
                   </td>
                   <td className="p-4 md:p-5 text-muted-foreground">
-                    {row.downPayment}
+                    {row.down}
                   </td>
                 </motion.tr>
               ))}
@@ -107,14 +110,14 @@ export function RatesTable() {
         </motion.div>
 
         <p className="mt-6 text-sm text-muted-foreground text-center max-w-2xl mx-auto">
-          Your exact rate depends on: credit score, employment type, property
-          type, and down payment size. We compare 15+ banks to find your best
-          option.
+          Your actual rate depends on: credit score, property value, loan amount,
+          employment type, and bank relationship. These are market ranges, not
+          guarantees.
         </p>
 
         <div className="mt-10 text-center">
           <Button asChild size="lg">
-            <a href="#contact">Get My Exact Rate Quote</a>
+            <a href="#contact">Get Personalized Rate Quote</a>
           </Button>
         </div>
       </div>

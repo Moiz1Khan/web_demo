@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, HelpCircle, ArrowRight } from "lucide-react";
+import { ChevronDown, HelpCircle, MessageCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 const faqs = [
   {
@@ -23,63 +24,52 @@ const faqs = [
     q: "Fixed rate home loan or variable?",
     a: "Fixed = certainty (same payment for 3-5 years). Variable = lower rate initially but can change. Most people choose fixed for 3-5 years, then refinance when period ends.",
   },
-  {
-    q: "Should I buy to let or live in?",
-    a: "Both work. Buy to let needs 25% down minimum. Rental income can help with approval but banks calculate conservatively (70% of actual rent).",
-  },
-  {
-    q: "Best home loan in UAE for expats?",
-    a: "Depends on your situation. We compare all banks and recommend best 2-3 for your specific profile.",
-  },
 ];
 
 export function FAQ() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
     <section id="faq" className="py-10 md:py-14 bg-transparent" data-reveal>
-      <div className="max-w-3xl mx-auto px-4 md:px-8">
-        <div className="text-center mb-8">
-          <div className="inline-flex p-3 rounded-xl bg-primary/10 mb-4">
-            <HelpCircle className="size-8 text-primary" />
-          </div>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+      <div className="max-w-6xl mx-auto px-4 md:px-8">
+        <div className="text-center mb-10">
+          <h2 className="text-3xl md:text-4xl font-bold mb-3">
             Frequently Asked Questions
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto">
-            Everything you need to know about UAE home loans. Can&apos;t find your answer? We&apos;re here to help.
+            Quick answers to common questions about UAE home loans
           </p>
         </div>
 
-        <div className="space-y-3">
+        <div className="grid md:grid-cols-2 gap-4">
           {faqs.map((faq, index) => (
             <div
               key={faq.q}
               className={cn(
-                "border-gradient-wrap shine-sweep bg-card border rounded-2xl overflow-hidden transition-all duration-300",
+                "bg-card border rounded-2xl overflow-hidden transition-all duration-300 h-fit",
                 openIndex === index
-                  ? "border-primary/30 shadow-[0_0_20px_rgba(40,48,58,0.08)]"
-                  : "border-border hover:border-primary/20"
+                  ? "border-primary/30 shadow-lg"
+                  : "border-border hover:border-primary/20 hover:shadow-md"
               )}
             >
               <button
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                className="w-full flex items-center justify-between gap-4 p-5 md:p-6 text-left hover:bg-secondary/30 transition-colors rounded-2xl"
+                className="w-full flex items-start justify-between gap-4 p-6 text-left hover:bg-secondary/20 transition-colors"
               >
-                <span className="font-medium text-foreground pr-2">
+                <span className="font-semibold text-foreground pr-2 text-base">
                   {faq.q}
                 </span>
                 <span
                   className={cn(
-                    "shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300",
+                    "shrink-0 w-7 h-7 rounded-full flex items-center justify-center transition-all duration-300",
                     openIndex === index
                       ? "bg-primary text-primary-foreground"
-                      : "bg-secondary/50 text-muted-foreground"
+                      : "bg-secondary text-muted-foreground"
                   )}
                 >
                   <ChevronDown
                     className={cn(
-                      "size-5 transition-transform duration-300",
+                      "size-4 transition-transform duration-300",
                       openIndex === index && "rotate-180"
                     )}
                   />
@@ -95,8 +85,8 @@ export function FAQ() {
                     transition={{ duration: 0.3, ease: "easeInOut" }}
                     className="overflow-hidden"
                   >
-                    <div className="px-5 md:px-6 pb-5 md:pb-6 pt-0 border-t border-border/50">
-                      <p className="pt-4 text-muted-foreground leading-relaxed">
+                    <div className="px-6 pb-6 pt-0 border-t border-border/50">
+                      <p className="pt-4 text-muted-foreground leading-relaxed text-sm">
                         {faq.a}
                       </p>
                     </div>
@@ -105,19 +95,24 @@ export function FAQ() {
               </AnimatePresence>
             </div>
           ))}
-        </div>
 
-        <div className="mt-10 text-center">
-          <p className="text-sm text-muted-foreground mb-3">
-            Still have questions?
-          </p>
-          <Link
-            href="#contact"
-            className="inline-flex items-center gap-2 text-primary font-medium hover:underline"
-          >
-            Get your personalized rate quote
-            <ArrowRight className="size-4" />
-          </Link>
+          {/* Have a Question Card */}
+          <div className="bg-gradient-to-br from-primary/10 via-primary/5 to-transparent border-2 border-primary/20 rounded-2xl p-8 flex flex-col items-center justify-center text-center hover:border-primary/40 transition-all duration-300 hover:shadow-lg">
+            <div className="inline-flex p-4 rounded-full bg-primary/10 mb-4">
+              <MessageCircle className="size-8 text-primary" />
+            </div>
+            <h3 className="text-xl font-bold text-foreground mb-2">
+              Have a Question?
+            </h3>
+            <p className="text-sm text-muted-foreground mb-6 max-w-xs">
+              Can&apos;t find what you&apos;re looking for? Check out our complete FAQ page
+            </p>
+            <Button asChild size="lg" className="w-full">
+              <Link href="/faq">
+                View All FAQs
+              </Link>
+            </Button>
+          </div>
         </div>
       </div>
     </section>

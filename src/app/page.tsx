@@ -2,9 +2,13 @@ import dynamic from "next/dynamic";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { TrustBar } from "@/components/TrustBar";
-import { WhyChoose } from "@/components/WhyChoose";
+import { ComparisonSection } from "@/components/ComparisonSection";
 import { ClientMortgageCalculator, ClientProcess, ClientFAQ, ClientCTAAndLeadSection } from "@/components/ClientOnlySections";
+import { WhoWeHelp } from "@/components/WhoWeHelp";
+import { StatsBar } from "@/components/StatsBar";
 import { RatesTable } from "@/components/RatesTable";
+import { MeetYourTeam } from "@/components/MeetYourTeam";
+import { OurPromises } from "@/components/OurPromises";
 import { EligibilityChecklist } from "@/components/EligibilityChecklist";
 import { Footer } from "@/components/Footer";
 import { ScrollProgress } from "@/components/ScrollProgress";
@@ -29,11 +33,15 @@ export default function Home() {
           <Hero />
           <div className="theme-gradient">
           <TrustBar />
-          <WhyChoose />
-          <ClientMortgageCalculator />
+          <ComparisonSection />
           <ClientProcess />
+          <ClientMortgageCalculator />
+          <WhoWeHelp />
           <CaseStudies />
+          <StatsBar />
           <RatesTable />
+          <MeetYourTeam />
+          <OurPromises />
           <EligibilityChecklist />
           <Testimonials />
           <ClientFAQ />

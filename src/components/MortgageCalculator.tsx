@@ -59,10 +59,18 @@ function calculateMortgage(
   return { loanAmount, monthlyPayment, totalRepayment, totalInterest };
 }
 
+function formatNumberWithCommas(num: number): string {
+  return num.toLocaleString('en-US');
+}
+
+function parseNumberFromString(str: string): number {
+  return parseInt(str.replace(/,/g, ''), 10) || 0;
+}
+
 export function MortgageCalculator() {
   const [residency, setResidency] = useState<Residency>("UAE Resident");
-  const [propertyValueStr, setPropertyValueStr] = useState("1500000");
-  const [downPaymentStr, setDownPaymentStr] = useState("375000");
+  const [propertyValueStr, setPropertyValueStr] = useState("1,000,000");
+  const [downPaymentStr, setDownPaymentStr] = useState("400,000");
   const [loanDuration, setLoanDuration] = useState(25);
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -77,8 +85,8 @@ export function MortgageCalculator() {
   const [modalLoanAmountStr, setModalLoanAmountStr] = useState("");
   const [modalLoanDuration, setModalLoanDuration] = useState(25);
 
-  const propertyValue = Math.max(0, parseInt(propertyValueStr, 10) || 0);
-  const downPayment = Math.max(0, parseInt(downPaymentStr, 10) || 0);
+  const propertyValue = Math.max(0, parseNumberFromString(propertyValueStr));
+  const downPayment = Math.max(0, parseNumberFromString(downPaymentStr));
 
   const { annualRate, minDownPercent } = getRateAndMinDown(
     propertyValue,
@@ -112,181 +120,167 @@ export function MortgageCalculator() {
       <div className="absolute inset-0 -z-10 [background:radial-gradient(ellipse_80%_50%_at_50%_0%,rgba(40,48,58,0.06),transparent_50%)]" aria-hidden />
       <div className="max-w-7xl mx-auto px-4 md:px-8 relative">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-2">
-          See Your Real Monthly Payment
+          See Your Real Monthly Payment <span className="text-primary">(Takes 30 Seconds)</span>
         </h2>
         <p className="text-center text-muted-foreground mt-2 mb-4">
           This is the average rate. Your exact rate might be lower.
         </p>
 
-        <div className="mt-8 max-w-2xl mx-auto bg-card border border-border rounded-2xl p-6 md:p-8 shadow-lg">
-          <div className="space-y-6">
-            <div>
-              <label className="block text-sm font-medium mb-2">
-                Residency status
-              </label>
-              <div className="flex gap-2 flex-wrap">
-                {residencyTypes.map((r) => (
-                  <button
-                    key={r}
-                    type="button"
-                    onClick={() => setResidency(r)}
-                    className={cn(
-                      "px-4 py-2 rounded-full text-sm font-medium transition-colors",
-                      residency === r
-                        ? "bg-primary text-primary-foreground"
-                        : "bg-secondary text-muted-foreground hover:text-foreground"
-                    )}
-                  >
-                    {r}
-                  </button>
-                ))}
+        <div className="mt-8 max-w-6xl mx-auto bg-card border-2 border-border rounded-3xl p-8 shadow-lg">
+          <div className="grid lg:grid-cols-[1fr_auto] gap-8 items-start">
+            {/* Left side - Inputs */}
+            <div className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium mb-3">
+                  Residency status
+                </label>
+                <div className="flex gap-2 flex-wrap">
+                  {residencyTypes.map((r) => (
+                    <button
+                      key={r}
+                      type="button"
+                      onClick={() => setResidency(r)}
+                      className={cn(
+                        "px-4 py-2 rounded-lg text-sm font-medium transition-colors",
+                        residency === r
+                          ? "bg-primary text-primary-foreground"
+                          : "bg-secondary text-muted-foreground hover:text-foreground"
+                      )}
+                    >
+                      {r}
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
 
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-medium mb-2">
-                  Property Value (AED)
-                </label>
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  autoComplete="off"
-                  placeholder="Enter property value (e.g. 1500000)"
-                  value={propertyValueStr}
-                  onChange={(e) => {
-                    const v = e.target.value.replace(/\D/g, "");
-                    setPropertyValueStr(v);
-                  }}
-                  onBlur={() => {
-                    if (propertyValueStr === "") setPropertyValueStr("0");
-                  }}
-                  className="w-full h-12 px-4 rounded-lg bg-background border border-border text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-                  aria-label="Property value in AED"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-2">
-                  Down Payment (AED) — min {minDownPercent}%
-                </label>
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  autoComplete="off"
-                  placeholder="Enter down payment (e.g. 375000)"
-                  value={downPaymentStr}
-                  onChange={(e) => {
-                    const v = e.target.value.replace(/\D/g, "");
-                    setDownPaymentStr(v);
-                  }}
-                  onBlur={() => {
-                    if (downPaymentStr === "") setDownPaymentStr("0");
-                    else if (propertyValue > 0) {
-                      const num = parseInt(downPaymentStr, 10) || 0;
-                      const capped = Math.min(num, propertyValue);
-                      setDownPaymentStr(capped.toString());
-                    }
-                  }}
-                  aria-label="Down payment in AED"
-                  className={cn(
-                    "w-full h-12 px-4 rounded-lg bg-background border text-foreground focus:outline-none focus:ring-2 focus:ring-primary",
-                    downPaymentError
-                      ? "border-red-500"
-                      : "border-border"
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium mb-2">
+                    Property Value
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      autoComplete="off"
+                      placeholder="1,000,000"
+                      value={propertyValueStr}
+                      onChange={(e) => {
+                        const v = e.target.value.replace(/\D/g, "");
+                        if (v === "") {
+                          setPropertyValueStr("");
+                        } else {
+                          const num = parseInt(v, 10);
+                          setPropertyValueStr(formatNumberWithCommas(num));
+                        }
+                      }}
+                      onBlur={() => {
+                        if (propertyValueStr === "") setPropertyValueStr("0");
+                      }}
+                      className="w-full h-12 px-4 pr-16 rounded-lg bg-background border border-border text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                      aria-label="Property value in AED"
+                    />
+                    <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">AED</span>
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-2">
+                    Down Payment
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      autoComplete="off"
+                      placeholder="400,000"
+                      value={downPaymentStr}
+                      onChange={(e) => {
+                        const v = e.target.value.replace(/\D/g, "");
+                        if (v === "") {
+                          setDownPaymentStr("");
+                        } else {
+                          const num = parseInt(v, 10);
+                          setDownPaymentStr(formatNumberWithCommas(num));
+                        }
+                      }}
+                      onBlur={() => {
+                        if (downPaymentStr === "") setDownPaymentStr("0");
+                        else if (propertyValue > 0) {
+                          const num = parseNumberFromString(downPaymentStr);
+                          const capped = Math.min(num, propertyValue);
+                          setDownPaymentStr(formatNumberWithCommas(capped));
+                        }
+                      }}
+                      aria-label="Down payment in AED"
+                      className={cn(
+                        "w-full h-12 px-4 pr-16 rounded-lg bg-background border text-foreground focus:outline-none focus:ring-2 focus:ring-primary",
+                        downPaymentError
+                          ? "border-red-500"
+                          : "border-border"
+                      )}
+                    />
+                    <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">AED</span>
+                  </div>
+                  {downPaymentError && (
+                    <p className="text-xs text-red-600 mt-1">
+                      Minimum {minDownPayment.toLocaleString()} AED ({minDownPercent}%) required
+                    </p>
                   )}
-                />
-                {downPaymentError && (
-                  <p className="text-xs text-red-600 mt-1">
-                    Minimum {minDownPayment.toLocaleString()} AED ({minDownPercent}%) required
-                  </p>
-                )}
+                </div>
               </div>
-            </div>
 
-            <div>
-              <label className="block text-sm font-medium mb-2">
-                Loan Duration
-              </label>
-              <div className="flex items-center gap-4">
-                <input
-                  type="range"
-                  min={1}
-                  max={30}
-                  value={loanDuration}
-                  onChange={(e) =>
-                    setLoanDuration(Number(e.target.value))
-                  }
-                  className="flex-1 h-2 rounded-full appearance-none bg-secondary accent-primary"
-                />
-                <span className="w-16 text-sm font-medium">
-                  {loanDuration} Years
-                </span>
-              </div>
-            </div>
-
-            <div className="space-y-4 pt-6 border-t border-border">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <div className="text-sm text-muted-foreground">
-                    Interest rate
-                  </div>
-                  <div className="text-lg font-bold text-primary">
-                    {(annualRate * 100).toFixed(2)}%
-                  </div>
-                </div>
-                <div>
-                  <div className="text-sm text-muted-foreground">
-                    Loan amount
-                  </div>
-                  <div className="text-2xl font-bold text-primary">
-                    {loanAmount.toLocaleString()} AED
-                  </div>
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <div className="text-sm text-muted-foreground">
-                    Monthly payment
-                  </div>
-                  <div className="text-2xl font-bold text-primary">
-                    {monthlyPayment > 0
-                      ? `${Math.round(monthlyPayment).toLocaleString()} AED`
-                      : "--"}
-                  </div>
-                </div>
-                <div>
-                  <div className="text-sm text-muted-foreground">
-                    Total interest
-                  </div>
-                  <div className="text-lg font-bold text-primary">
-                    {totalInterest > 0
-                      ? `${Math.round(totalInterest).toLocaleString()} AED`
-                      : "--"}
-                  </div>
-                </div>
-              </div>
               <div>
-                <div className="text-sm text-muted-foreground">
-                  Total repayment
-                </div>
-                <div className="text-lg font-semibold">
-                  {totalRepayment > 0
-                    ? `${Math.round(totalRepayment).toLocaleString()} AED`
-                    : "--"}{" "}
-                  <span className="text-sm font-normal text-muted-foreground">
-                    over {loanDuration} years
+                <label className="block text-sm font-medium mb-3">
+                  Loan Duration
+                </label>
+                <div className="flex items-center gap-4">
+                  <input
+                    type="range"
+                    min={1}
+                    max={25}
+                    value={loanDuration}
+                    onChange={(e) =>
+                      setLoanDuration(Number(e.target.value))
+                    }
+                    className="flex-1 h-2 rounded-full appearance-none bg-secondary accent-primary"
+                  />
+                  <span className="w-20 text-sm font-medium">
+                    {loanDuration} Years
                   </span>
                 </div>
               </div>
+
+              <p className="text-xs text-muted-foreground pt-2">
+                This calculation is based off of live products in our database
+              </p>
             </div>
 
-            <p className="text-xs text-muted-foreground">
-              This calculation is based on live products in our database.
-            </p>
+            {/* Right side - Results */}
+            <div className="lg:border-l lg:border-border lg:pl-8 space-y-4">
+              <div className="text-right">
+                <div className="text-sm text-muted-foreground mb-1">
+                  Loan Amount
+                </div>
+                <div className="text-4xl font-bold text-foreground">
+                  {formatNumberWithCommas(loanAmount)} AED
+                </div>
+              </div>
 
-            <Button className="w-full" size="lg" onClick={() => setModalOpen(true)}>
-              Apply Now
-            </Button>
+              <div className="text-right">
+                <div className="text-sm text-muted-foreground mb-1">
+                  Monthly Cost
+                </div>
+                <div className="text-3xl font-bold text-foreground">
+                  {monthlyPayment > 0
+                    ? `${formatNumberWithCommas(Math.round(monthlyPayment))} AED`
+                    : "--"}
+                </div>
+              </div>
+
+              <Button className="w-full mt-6" size="lg" onClick={() => setModalOpen(true)}>
+                Get Started
+              </Button>
+            </div>
           </div>
         </div>
       </div>
@@ -402,7 +396,7 @@ export function MortgageCalculator() {
                       onChange={(e) => setModalLoanDuration(Number(e.target.value))}
                       className="w-full h-12 px-4 rounded-lg bg-slate-800/60 border border-slate-500/30 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 [&>option]:bg-slate-800"
                     >
-                      {Array.from({ length: 30 }, (_, i) => i + 1).map((y) => (
+                      {Array.from({ length: 25 }, (_, i) => i + 1).map((y) => (
                         <option key={y} value={y}>{y} years</option>
                       ))}
                     </select>

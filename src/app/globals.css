@@ -148,6 +148,20 @@ body {
   will-change: transform;
 }
 
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll-left {
+  animation: scroll-left 30s linear infinite;
+  will-change: transform;
+}
+
 /* Animation utilities */
 @layer utilities {
   .animate-fade-in {
@@ -305,7 +319,6 @@ body {
   transform-origin: left;
 }
 
-/* Reduce motion for accessibility */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -317,3 +330,120 @@ body {
     animation: none !important;
   }
 }
+
+/* ── Scroll reveal — IntersectionObserver adds .reveal-visible ─────────── */
+/* Only transform + opacity → runs entirely on the GPU compositor thread   */
+.reveal-enter {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal-enter.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scale-in-enter {
+  opacity: 0;
+  transform: scale(0.97);
+  transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.scale-in-enter.scale-in-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ── Futuristic Magnetic Cursor ────────────────────────────────────────── */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  border-radius: 50%;
+  will-change: transform;
+}
+
+/* Sharp inner dot */
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  background: #28303a;
+  margin-left: -3px;
+  margin-top: -3px;
+  box-shadow: 0 0 8px 2px rgba(40, 48, 58, 0.45);
+  transition: transform 0.08s ease, background 0.2s ease;
+}
+
+/* Glowing trailing ring */
+.cursor-ring {
+  width: 32px;
+  height: 32px;
+  margin-left: -16px;
+  margin-top: -16px;
+  border: 1.5px solid rgba(40, 48, 58, 0.5);
+  background: rgba(40, 48, 58, 0.04);
+  box-shadow: 0 0 12px 2px rgba(40, 48, 58, 0.12),
+              inset 0 0 8px rgba(40, 48, 58, 0.06);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.25s ease,
+              box-shadow 0.25s ease;
+  backdrop-filter: blur(2px);
+}
+
+/* Cursor morph on interactive hover */
+.cursor-ring[style*="scale(2.2)"],
+.cursor-ring:hover {
+  border-color: rgba(40, 48, 58, 0.8);
+  box-shadow: 0 0 20px 4px rgba(40, 48, 58, 0.18),
+              inset 0 0 14px rgba(40, 48, 58, 0.1);
+}
+
+/* Cursor press shrink */
+.cursor-dot.cursor-pressed {
+  transform: scale(0.5) !important;
+  background: #28303a;
+}
+
+/* Only show custom cursor on non-touch devices */
+@media (pointer: coarse) {
+  .cursor-dot,
+  .cursor-ring {
+    display: none;
+  }
+}
+
+/* Hide scrollbar utility */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Completely hide scrollbar for scroll stack */
+.scrollbar-hide-complete {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide-complete::-webkit-scrollbar {
+  display: none;
+}
+
+.scroll-stack-container.scrollbar-hide-complete {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scroll-stack-container.scrollbar-hide-complete::-webkit-scrollbar {
+  display: none;
+}
+

@@ -1,48 +1,59 @@
 "use client";
 
 import Image from "next/image";
-import Stepper, { Step } from "./Stepper";
 import { images } from "@/lib/media";
+import ScrollStack, { ScrollStackItem } from "./ScrollStack";
 
 const phases = [
   {
-    days: "Day 1-2",
-    title: "Pre-Approval",
+    id: 1,
+    days: "Day 1",
+    title: "Meet Your Consultant",
+    subtitle: "15-minute call. No pressure.",
+    image: images.process[0],
     items: [
-      "15-min call with your consultant",
-      "Income verification",
-      "Calculate your max borrowing",
-      "You know your budget",
+      "You get ONE person. Not a team. Not a department. One mortgage consultant who handles everything from this call until you're holding keys.",
+      "They call you within 2 hours of inquiry. You talk. They listen. They tell you honestly if they can help.",
     ],
   },
   {
-    days: "Day 3-5",
-    title: "Document Collection",
+    id: 2,
+    days: "Day 2-3",
+    title: "Build Your Strategy",
+    subtitle: "We prepare everything before submission.",
+    image: images.process[1],
     items: [
-      "We send checklist",
-      "You gather papers",
-      "We review before submission",
-      "Fix issues immediately",
+      "Review every document before it goes to the banks",
+      "Fix issues immediately (not after rejection)",
+      "Only submit when we know you'll get approved",
+      "Present your case for maximum approval odds",
     ],
   },
   {
-    days: "Day 6-10",
-    title: "Bank Review",
+    id: 3,
+    days: "—",
+    title: "Bank Submission & Negotiation",
+    subtitle: "We submit to multiple lenders simultaneously.",
+    image: images.process[2],
     items: [
-      "Submit to multiple lenders",
-      "We handle all questions",
-      "Negotiate better terms",
-      "Update you every 48 hours",
+      "While you wait, we: Handle all bank questions and requests",
+      "Negotiate better rates and terms",
+      "Push for faster decisions",
+      "Update you every 48 hours minimum",
     ],
   },
   {
-    days: "Day 11-14",
+    id: 4,
+    days: "—",
     title: "Approval & Closing",
+    subtitle: "You sign papers and collect keys.",
+    image: images.process[3],
     items: [
-      "Bank approves",
-      "Property valuation done",
-      "Sign documents",
-      "Collect keys",
+      "We coordinate everything: Bank paperwork",
+      "Lawyer appointments",
+      "Developer handover",
+      "Utility connections",
+      "You show up. Sign. Get keys. Move in.",
     ],
   },
 ];
@@ -51,58 +62,84 @@ export function Process() {
   return (
     <section id="process" className="py-10 md:py-14 bg-transparent" data-reveal>
       <div className="max-w-7xl mx-auto px-4 md:px-8">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-2">
-          THE PROCESS
+        <h2 className="text-2xl md:text-3xl font-bold text-center mb-2">
+          HOW IT WORKS
         </h2>
         <p className="text-lg text-muted-foreground text-center mb-8">
-          Application to Keys: 7-14 Days
+          From First Call to Keys in Hand: Here&apos;s the Whole Process
         </p>
 
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-          <div className="relative aspect-[4/3] lg:aspect-square rounded-2xl overflow-hidden order-2 lg:order-1">
-            <Image
-              src={images.process[0]}
-              alt="Mortgage process"
-              fill
-              className="object-cover"
-              sizes="(max-width: 1024px) 100vw, 50vw"
-            />
-          </div>
-          <div className="order-1 lg:order-2">
-            <Stepper
-              initialStep={1}
-              onStepChange={(step) => {}}
-              onFinalStepCompleted={() => {}}
-              backButtonText="Previous"
-              nextButtonText="Next"
-            >
-              {phases.map((phase) => (
-                <Step key={phase.days}>
-                  <div className="w-full">
-                    <div className="text-center mb-8">
-                      <span className="inline-block font-mono text-sm font-bold text-primary bg-primary/10 px-3 py-1 rounded-lg mb-2">
-                        {phase.days}
-                      </span>
-                      <h3 className="text-2xl md:text-3xl font-bold text-foreground">{phase.title}</h3>
+        <div className="h-[600px] rounded-2xl overflow-hidden">
+          <ScrollStack
+            useWindowScroll={false}
+            itemDistance={100}
+            itemScale={0.05}
+            itemStackDistance={30}
+            stackPosition="20%"
+            scaleEndPosition="10%"
+            baseScale={0.9}
+            className="scrollbar-hide-complete"
+          >
+            {phases.map((phase) => (
+              <ScrollStackItem
+                key={phase.id}
+                itemClassName="border-2 border-border hover:border-primary/40 transition-colors overflow-hidden backdrop-blur-sm"
+              >
+                <div className="absolute inset-0 z-0">
+                  <Image
+                    src={phase.image}
+                    alt={phase.title}
+                    fill
+                    className="object-cover"
+                    sizes="100vw"
+                    priority
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-br from-card/60 via-card/50 to-card/60" />
+                </div>
+
+                <div className="relative z-10 h-full flex flex-col">
+                  <div className="flex items-center gap-4 mb-6">
+                    <span className="font-mono text-sm font-bold text-primary-foreground bg-primary px-3 py-1.5 rounded-lg shrink-0 shadow-lg">
+                      {phase.days}
+                    </span>
+                    <div>
+                      <h3 className="font-bold text-2xl text-foreground drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                        {phase.title}
+                      </h3>
+                      <p className="text-sm text-foreground drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                        {phase.subtitle}
+                      </p>
                     </div>
-                    <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
-                      {phase.items.map((item, i) => (
-                        <li
-                          key={item}
-                          className="flex items-start gap-3 p-4 rounded-xl bg-secondary/50 border border-border/60"
-                        >
-                          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground text-sm font-bold">
-                            {i + 1}
-                          </span>
-                          <span className="text-foreground font-medium leading-snug pt-0.5">{item}</span>
-                        </li>
-                      ))}
-                    </ul>
                   </div>
-                </Step>
-              ))}
-            </Stepper>
-          </div>
+
+                  <ul className="space-y-3 flex-1">
+                    {phase.items.map((item, idx) => (
+                      <li
+                        key={idx}
+                        className="flex items-start gap-3 text-sm"
+                      >
+                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-bold mt-0.5 shadow-lg">
+                          ✓
+                        </span>
+                        <span className="text-foreground leading-relaxed font-semibold drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                          {item}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </ScrollStackItem>
+            ))}
+          </ScrollStack>
+        </div>
+
+        <div className="mt-8 text-center">
+          <a
+            href="#contact"
+            className="inline-flex items-center justify-center rounded-full bg-primary px-8 py-3.5 text-base font-semibold text-primary-foreground hover:bg-primary/90 transition-colors"
+          >
+            Book Your Free 15-Minute Call Now
+          </a>
         </div>
       </div>
     </section>

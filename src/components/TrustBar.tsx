@@ -1,102 +1,48 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { motion, useInView } from "framer-motion";
-import { LogoCarousel } from "./LogoCarousel";
-import { images } from "@/lib/media";
+import Image from "next/image";
 
-const pressLogoItems = [
-  { name: "Arabian Business", src: images.pressLogos[0] },
-  { name: "The National", src: images.pressLogos[1] },
-  { name: "Gulf News", src: images.pressLogos[2] },
-  { name: "Entrepreneur", src: images.pressLogos[3] },
-  { name: "Construction Week", src: images.pressLogos[4] },
-  { name: "Wamda", src: images.pressLogos[5] },
+const BANK_LOGOS = [
+  "https://res.cloudinary.com/dxfejax3u/image/upload/v1771697590/Screenshot_2026-02-21_231253_yi7c0z.png",
+  "https://res.cloudinary.com/dxfejax3u/image/upload/v1771697534/Screenshot_2026-02-21_231159_prjr20.png",
+  "https://res.cloudinary.com/dxfejax3u/image/upload/v1771697483/Screenshot_2026-02-21_231108_coyp1e.png",
+  "https://res.cloudinary.com/dxfejax3u/image/upload/v1771697417/Screenshot_2026-02-21_231005_oxx393.png",
+  "https://res.cloudinary.com/dxfejax3u/image/upload/v1771697349/Screenshot_2026-02-21_230852_qbw2yy.png",
+  "https://res.cloudinary.com/dxfejax3u/image/upload/v1771697242/Screenshot_2026-02-21_230657_wilp84.png",
+  "https://res.cloudinary.com/dxfejax3u/image/upload/v1771697076/Screenshot_2026-02-21_230415_rptjfe.png",
+  "https://res.cloudinary.com/dxfejax3u/image/upload/v1771697031/Screenshot_2026-02-21_230133_tnifpu.png",
 ];
-
-const stats = [
-  { value: 12847, suffix: "", label: "Home Loans Approved" },
-  { value: 15, suffix: "+", label: "UAE Banks" },
-  { value: 200, suffix: "+", label: "Partner Agents" },
-  { value: 2400, suffix: "", label: "Self-Employed Approved" },
-];
-
-function easeOutQuart(t: number): number {
-  return 1 - Math.pow(1 - t, 4);
-}
-
-function CountUp({
-  target,
-  suffix = "",
-  duration = 1.5,
-  inView,
-}: {
-  target: number;
-  suffix?: string;
-  duration?: number;
-  inView: boolean;
-}) {
-  const [display, setDisplay] = useState(0);
-  const startRef = useRef<number | null>(null);
-
-  useEffect(() => {
-    if (!inView || target === 0) return;
-    const startTime = performance.now();
-    startRef.current = startTime;
-
-    const tick = (now: number) => {
-      if (!startRef.current) return;
-      const elapsed = (now - startRef.current) / 1000;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = easeOutQuart(progress);
-      const current = Math.floor(eased * target);
-      setDisplay(current);
-      if (progress < 1) requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
-    return () => {
-      startRef.current = null;
-    };
-  }, [inView, target, duration]);
-
-  const formatted = display.toLocaleString();
-  return <>{formatted}{suffix}</>;
-}
 
 export function TrustBar() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.3 });
-
   return (
-    <section className="py-6 md:py-8 border-b border-border/50 bg-transparent" data-reveal>
+    <section className="py-8 md:py-10 border-b border-border/50 bg-transparent overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
-        <p className="text-center text-xs md:text-sm text-muted-foreground uppercase tracking-wider mb-6">
-          As featured in
-        </p>
-        <LogoCarousel items={pressLogoItems} className="mb-6" />
-        <div ref={ref} className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-          {stats.map((stat) => (
-            <motion.div
-              key={stat.label}
-              className="text-center"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-            >
-              <div className="text-2xl md:text-3xl font-bold text-foreground">
-                <CountUp
-                  target={stat.value}
-                  suffix={stat.suffix}
-                  inView={isInView}
+        <h3 className="text-center text-lg md:text-xl font-semibold text-foreground mb-6">
+          We work with the best banks in the United Arab Emirates.
+        </h3>
+        
+        <div className="relative">
+          <div className="flex animate-scroll-left">
+            {[...BANK_LOGOS, ...BANK_LOGOS].map((logo, index) => (
+              <div
+                key={index}
+                className="flex-shrink-0 mx-4 md:mx-6 h-16 md:h-20 w-32 md:w-40 relative"
+              >
+                <Image
+                  src={logo}
+                  alt={`Bank logo ${index + 1}`}
+                  fill
+                  className="object-contain"
+                  sizes="(max-width: 768px) 128px, 160px"
                 />
               </div>
-              <div className="text-xs md:text-sm text-muted-foreground mt-1">
-                {stat.label}
-              </div>
-            </motion.div>
-          ))}
+            ))}
+          </div>
         </div>
+
+        <p className="text-center text-muted-foreground text-sm md:text-base max-w-2xl mx-auto mt-6">
+          We compare rates from 15+ UAE lenders to get you the best deal.
+        </p>
       </div>
     </section>
   );

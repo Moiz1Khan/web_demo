@@ -17,51 +17,51 @@ const Card = dynamic(
 
 const caseStudies = [
   {
-    title: "From Rejection to Villa in 10 Days",
+    title: "From 'Too Risky' to Villa Owner in 10 Days",
     imageIdx: 0,
-    quote: "They found a way when everyone else said no.",
-    person: "James, Self-Employed Consultant",
+    quote: "Three banks looked at my bank statements and panicked. Ahmad looked at my business and got it immediately. Perspective matters.",
+    person: "Sarah (names changed for privacy)",
     problem:
-      'AED 45K average income, but it fluctuates monthly. Three banks rejected for "inconsistent income."',
+      "Sarah runs a consulting business. Makes AED 45K/month average, but it fluctuates (some months AED 80K, some AED 20K). Four banks rejected \"variable income\" immediately.",
     solution:
-      "Showed 3-year average, client contracts, and revenue stability. Found a bank that understands modern work.",
+      "We showed her 3-year average, client retention rate, and contract pipeline. Found a bank that understands modern consultancy businesses.",
     results: [
       "AED 3.2M approved at 4.1%",
-      "75% LTV",
-      "10 days total",
-      "Dubai Marina villa",
+      "75% LTV (higher than expected)",
+      "10 days from first call to approval",
+      "Now owns 3-bed villa in Dubai Marina",
     ],
   },
   {
-    title: "Approved While Still on Probation",
+    title: "First Apartment at 26 Despite Being on Probation",
     imageIdx: 1,
-    quote: "I own my apartment now instead of renting.",
-    person: "Sarah, Social Activist",
+    quote: "I was ready to wait 3 months. Chandan found a way in under 2 weeks. Now I'm building equity instead of enriching a landlord.",
+    person: "David (names changed for privacy)",
     problem:
-      'Perfect apartment found. AED 18K salary, but on 3-month probation. Every bank said "wait."',
+      "David, 26, marketing manager at AED 18K salary. Found a perfect apartment in Dubai Marina, but still on 3-month probation. Every bank said, \"Come back after probation ends.\"",
     solution:
-      "Emphasized UK degree, 25% down payment saved, employer letter confirming permanent role.",
+      "Found a lender who accepts probation employees with strong profiles. Emphasized his UK degree, 25% down payment saved, and an employer letter confirming a permanent role.",
     results: [
       "AED 1.2M approved at 4.75%",
-      "Still on probation",
-      "11 days total",
-      "Paying AED 6,450 vs AED 7,500 rent",
+      "Still on probation when approved",
+      "11 days from consultation to approval",
+      "Paying AED 6,450/month vs AED 7,500 rent",
     ],
   },
   {
-    title: "Recent Job Change Didn't Stop Approval",
+    title: "AED 15M Commercial Loan at 60% LTV When Market Offered 50%",
     imageIdx: 2,
-    quote: "Smooth process, great rate. No regrets.",
-    person: "Omar, Software Engineer",
+    quote: "Three banks said 50% maximum. Faraz didn't accept it. Saving AED 1.5M in down payment meant I could pursue another deal immediately.",
+    person: "Investor (names changed for privacy)",
     problem:
-      "Changed jobs 2 months ago (40% salary increase to AED 35K). Banks wanted 6 months of employment.",
+      "Investor wanted to buy 12-unit retail plaza in Dubai Marina. High rental income, but banks offered only 50% LTV due to \"retail uncertainty.\"",
     solution:
-      "Highlighted career progression in same industry, salary jump, 30% down payment, credit score 755.",
+      "We prepared a detailed tenant analysis showing 8 of 12 on 5+ year leases, zero vacancy in 3 years, premium location. Found bank that valued quality over category.",
     results: [
-      "AED 2.1M approved at 4.35%",
-      "75% LTV",
-      "16 days total",
-      "Business Bay 2-bedroom",
+      "AED 15M approved at 5.2% (vs 6.5% initial offers)",
+      "60% LTV saved AED 1.5M in down payment",
+      "20-year term",
+      "Annual cash flow after debt: AED 720K",
     ],
   },
 ];
@@ -84,12 +84,14 @@ export function CaseStudies() {
       data-reveal
     >
       <div className="max-w-7xl mx-auto px-4 md:px-8">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">
-          Real Case Studies
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-2">
+          Case Studies
         </h2>
+        <p className="text-muted-foreground text-center mb-8">
+          Names changed for privacy, but these are actual cases we&apos;ve handled.
+        </p>
 
         <div className="relative grid grid-cols-[1fr_1fr] gap-4 md:gap-8 items-center min-h-[420px] md:min-h-[480px]">
-          {/* Left: Case study list - clickable */}
           <div className="flex flex-col gap-3 md:gap-4 min-w-0">
             {caseStudies.map((study, index) => (
               <motion.button
@@ -113,7 +115,6 @@ export function CaseStudies() {
             ))}
           </div>
 
-          {/* Right: CardSwap - loads only when section in view (defers GSAP bundle) */}
           <motion.div
             className="relative h-[380px] md:h-[480px] min-w-0 flex items-end justify-end overflow-visible"
             initial={{ opacity: 0, scale: 0.9, x: 30 }}
@@ -157,21 +158,21 @@ export function CaseStudies() {
                     </p>
                     <p className="text-sm text-muted-foreground mb-2">
                       <span className="font-semibold text-foreground">
-                        Problem:
+                        The Problem:
                       </span>{" "}
                       {study.problem}
                     </p>
                     <p className="text-sm text-muted-foreground mb-4">
                       <span className="font-semibold text-foreground">
-                        Solution:
+                        What Changed:
                       </span>{" "}
                       {study.solution}
                     </p>
                     <div className="pt-4 border-t border-border">
-                      <p className="font-semibold text-sm mb-2">Result:</p>
+                      <p className="font-semibold text-sm mb-2">The Numbers:</p>
                       <ul className="space-y-1 text-sm text-muted-foreground">
                         {study.results.map((r) => (
-                          <li key={r}>• {r}</li>
+                          <li key={r}>→ {r}</li>
                         ))}
                       </ul>
                     </div>

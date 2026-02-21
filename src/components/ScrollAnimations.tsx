@@ -1,84 +1,69 @@
 "use client";
 
 import { useEffect } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
 
 export function ScrollAnimations() {
   useEffect(() => {
     if (typeof window === "undefined") return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    let ctx: gsap.Context | null = null;
-    requestAnimationFrame(() => {
+    // ── Hero fade-in (no scroll cost — fires once on mount) ──────────────
+    const hero = document.querySelector("[data-animate='hero']") as HTMLElement | null;
+    if (hero) {
+      hero.style.opacity = "0";
+      hero.style.transform = "translateY(32px)";
       requestAnimationFrame(() => {
-        ctx = gsap.context(() => {
-          // Hero content fade
-          const hero = document.querySelector("[data-animate='hero']");
-          if (hero) {
-            gsap.from(hero, {
-              y: 40,
-              opacity: 0,
-              duration: 0.8,
-              ease: "power2.out",
-              delay: 0.2,
+        requestAnimationFrame(() => {
+          hero.style.transition = "opacity 0.75s cubic-bezier(0.22,1,0.36,1), transform 0.75s cubic-bezier(0.22,1,0.36,1)";
+          hero.style.opacity = "1";
+          hero.style.transform = "translateY(0)";
+        });
+      });
+    }
+
+    // ── IntersectionObserver — fires ONLY when element enters viewport ────
+    // Zero scroll-event cost. GPU handles the CSS transition.
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const el = entry.target as HTMLElement;
+
+          if (el.dataset.reveal !== undefined) {
+            el.classList.add("reveal-visible");
+          }
+
+          if (el.dataset.scaleIn !== undefined) {
+            el.classList.add("scale-in-visible");
+          }
+
+          if (el.dataset.stagger !== undefined) {
+            const items = el.querySelectorAll<HTMLElement>("[data-stagger-item]");
+            items.forEach((item, i) => {
+              item.style.transitionDelay = `${i * 60}ms`;
+              item.classList.add("reveal-visible");
             });
           }
 
-          // Section reveals - simple fade
-          gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((el) => {
-            gsap.from(el, {
-              scrollTrigger: {
-                trigger: el,
-                start: "top 92%",
-                toggleActions: "play none none reverse",
-              },
-              opacity: 0,
-              y: 24,
-              duration: 0.5,
-              ease: "power2.out",
-            });
-          });
-
-          // Stagger cards
-          gsap.utils.toArray<HTMLElement>("[data-stagger]").forEach((container) => {
-            const children = container.querySelectorAll("[data-stagger-item]");
-            if (children.length > 0) {
-              gsap.from(children, {
-                scrollTrigger: {
-                  trigger: container,
-                  start: "top 90%",
-                  toggleActions: "play none none reverse",
-                },
-                opacity: 0,
-                y: 20,
-                duration: 0.4,
-                stagger: 0.05,
-                ease: "power2.out",
-              });
-            }
-          });
-
-          // Scale-in cards
-          gsap.utils.toArray<HTMLElement>("[data-scale-in]").forEach((el) => {
-            gsap.from(el, {
-              scrollTrigger: {
-                trigger: el,
-                start: "top 90%",
-                toggleActions: "play none none reverse",
-              },
-              opacity: 0,
-              scale: 0.98,
-              duration: 0.5,
-              ease: "power2.out",
-            });
-          });
+          io.unobserve(el); // fire only once
         });
-      });
+      },
+      { threshold: 0.08, rootMargin: "0px 0px -5% 0px" }
+    );
+
+    // Seed initial hidden state via JS so SSR HTML is visible without JS
+    document.querySelectorAll<HTMLElement>("[data-reveal], [data-scale-in], [data-stagger]").forEach((el) => {
+      if (el.dataset.reveal !== undefined) el.classList.add("reveal-enter");
+      if (el.dataset.scaleIn !== undefined) el.classList.add("scale-in-enter");
+      if (el.dataset.stagger !== undefined) {
+        el.querySelectorAll<HTMLElement>("[data-stagger-item]").forEach((item) => {
+          item.classList.add("reveal-enter");
+        });
+      }
+      io.observe(el);
     });
-    return () => ctx?.revert();
+
+    return () => io.disconnect();
   }, []);
 
   return null;

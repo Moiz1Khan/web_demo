@@ -202,11 +202,11 @@ export function FAQDome() {
           <p className="text-muted-foreground">Everything you need to know about UAE home loans.</p>
         </div>
 
-        <div className="flex flex-row gap-6 md:gap-10 items-center min-w-0 justify-start">
-          {/* Left: FAQ 3D Globe - transparent background, shifted left */}
+        <div className="grid lg:grid-cols-2 gap-8 items-start">
+          {/* Left: FAQ 3D Globe */}
           <div
             ref={rootRef}
-            className="faq-dome-root relative w-full min-w-0 flex-[0_1_52%] max-w-[55%] -ml-2 md:-ml-4 min-h-[420px] md:min-h-[480px] rounded-2xl overflow-visible bg-transparent"
+            className="faq-dome-root relative w-full min-h-[420px] md:min-h-[500px] rounded-2xl overflow-visible bg-transparent"
           >
             <style
               dangerouslySetInnerHTML={{
@@ -266,33 +266,43 @@ export function FAQDome() {
             </main>
           </div>
 
-          {/* Right: Have a question - larger card */}
-          <div className="shrink-0 w-[380px] md:w-[440px] lg:w-[460px] bg-card border border-border rounded-2xl p-7 md:p-10 shadow-lg">
-            <h3 className="text-2xl font-bold text-foreground mb-3">Have a question?</h3>
-            <p className="text-muted-foreground text-sm mb-7">
-              Can&apos;t find your answer above? Ask us anything about UAE home loans.
-            </p>
-            <form onSubmit={handleSubmitQuestion} className="space-y-5">
-              <textarea
-                value={question}
-                onChange={(e) => setQuestion(e.target.value)}
-                placeholder="Type your question here..."
-                rows={5}
-                className={cn(
-                  "w-full px-5 py-4 text-base rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground",
-                  "focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                )}
-              />
-              <button
-                type="submit"
-                className="w-full py-4 text-base rounded-xl bg-[#28303a] text-white font-semibold shadow-[0_4px_14px_rgba(0,0,0,0.2)] hover:bg-[#323d48] transition-colors"
+          {/* Right: FAQ Cards Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {/* 4 FAQ Cards */}
+            {faqs.slice(0, 4).map((faq, index) => (
+              <div
+                key={index}
+                className="bg-card border border-border rounded-2xl p-5 hover:border-primary/30 hover:shadow-md transition-all"
               >
-                Send Question
-              </button>
-              {submitStatus === "success" && (
-                <p className="text-sm text-green-600">Thanks! We&apos;ll get back to you soon.</p>
-              )}
-            </form>
+                <h4 className="font-semibold text-foreground mb-2 text-base">
+                  {faq.q}
+                </h4>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {faq.a}
+                </p>
+              </div>
+            ))}
+
+            {/* Have a Question Card */}
+            <div className="bg-gradient-to-br from-primary/10 via-primary/5 to-transparent border-2 border-primary/20 rounded-2xl p-6 flex flex-col items-center justify-center text-center hover:border-primary/40 transition-all hover:shadow-lg sm:col-span-2">
+              <div className="inline-flex p-3 rounded-full bg-primary/10 mb-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+              </div>
+              <h3 className="text-lg font-bold text-foreground mb-2">
+                Have a Question?
+              </h3>
+              <p className="text-sm text-muted-foreground mb-4">
+                Can&apos;t find what you&apos;re looking for? Check out our complete FAQ page
+              </p>
+              <a
+                href="/faq"
+                className="inline-flex items-center justify-center px-6 py-2.5 rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors"
+              >
+                View All FAQs
+              </a>
+            </div>
           </div>
         </div>
       </div>
