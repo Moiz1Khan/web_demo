@@ -11,9 +11,9 @@ export const images = {
     "/media/process/phase-4-approval-closing.png",
   ],
   caseStudies: [
-    "/media/case-studies/case-study-1.png",
-    "/media/case-studies/case-study-2.png",
-    "/media/case-studies/case-study-3.png",
+    "https://res.cloudinary.com/dxfejax3u/image/upload/v1772461871/WhatsApp_Image_2026-03-02_at_7.20.15_PM_1_tf6v3r.jpg",
+    "https://res.cloudinary.com/dxfejax3u/image/upload/v1772461872/WhatsApp_Image_2026-03-02_at_7.20.14_PM_rgmx9g.jpg",
+    "https://res.cloudinary.com/dxfejax3u/image/upload/v1772461871/WhatsApp_Image_2026-03-02_at_7.20.15_PM_w6chhw.jpg",
   ],
   blog: [
     "/media/blog/blog-1-first-time-buyer.png",

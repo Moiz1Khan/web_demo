@@ -20,7 +20,7 @@ export function BlogSection() {
           <div className="relative order-1 lg:order-1 lg:max-w-[360px]">
             <div className="relative rounded-2xl overflow-hidden aspect-[4/5] max-h-[400px] lg:max-h-[420px] group">
               <Image
-                src={images.blog[0]}
+                src="https://res.cloudinary.com/dxfejax3u/image/upload/v1772461444/WhatsApp_Image_2026-03-02_at_7.23.22_PM_ryhhbi.jpg"
                 alt="First-time buyer guide - Dubai home loans"
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-105"

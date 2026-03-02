@@ -93,7 +93,6 @@ export function Process() {
                     sizes="100vw"
                     priority
                   />
-                  <div className="absolute inset-0 bg-gradient-to-br from-card/60 via-card/50 to-card/60" />
                 </div>
 
                 <div className="relative z-10 h-full flex flex-col">
@@ -102,10 +101,10 @@ export function Process() {
                       {phase.days}
                     </span>
                     <div>
-                      <h3 className="font-bold text-2xl text-foreground">
+                      <h3 className="font-bold text-2xl text-white">
                         {phase.title}
                       </h3>
-                      <p className="text-sm text-foreground">
+                      <p className="text-sm text-white/90">
                         {phase.subtitle}
                       </p>
                     </div>
@@ -117,10 +116,10 @@ export function Process() {
                         key={idx}
                         className="flex items-start gap-3 text-sm"
                       >
-                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-bold mt-0.5">
+                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white text-primary text-xs font-bold mt-0.5">
                           ✓
                         </span>
-                        <span className="text-foreground leading-relaxed font-semibold">
+                        <span className="text-white leading-relaxed font-semibold">
                           {item}
                         </span>
                       </li>

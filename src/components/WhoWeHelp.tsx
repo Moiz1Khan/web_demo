@@ -2,35 +2,34 @@
 
 import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
-import { images } from "@/lib/media";
 
 const profiles = [
   {
     id: 1,
     title: "Self-Employed & Business Owners",
     tagline: "Variable Income Isn't a Problem When You Know How to Present It.",
-    image: images.caseStudies[0],
+    image: "https://res.cloudinary.com/dxfejax3u/image/upload/v1772462434/WhatsApp_Image_2026-03-02_at_7.08.02_PM_1_r4q1xi.jpg",
     copy: "Three banks said your income is \"inconsistent.\" We've approved 2,400+ self-employed clients because we know how to show banks the full picture.",
   },
   {
     id: 2,
     title: "Non-UAE Residents",
     tagline: "Buy Dubai Property From London, Mumbai, or New York, and Visit the UAE Once.",
-    image: images.caseStudies[1],
+    image: "https://res.cloudinary.com/dxfejax3u/image/upload/v1772462434/WhatsApp_Image_2026-03-02_at_7.08.02_PM_gzenky.jpg",
     copy: "Financed buyers from 47 countries. The whole process happens remotely. You fly in for 2 days to sign papers and collect keys. That's it.",
   },
   {
     id: 3,
     title: "Previously Rejected Applications",
     tagline: "60% of 'Rejected' Applications We Review Get Approved.",
-    image: images.caseStudies[2],
+    image: "https://res.cloudinary.com/dxfejax3u/image/upload/v1772462433/WhatsApp_Image_2026-03-02_at_7.08.01_PM_vkryes.jpg",
     copy: "Banks said no. We say, \"let's fix what went wrong.\" Most rejections aren't because you don't qualify; you applied to the wrong bank or presented incorrect information.",
   },
   {
     id: 4,
     title: "Complex Situations",
     tagline: "The More Complicated Your Case, the More We Shine.",
-    image: images.process[0],
+    image: "https://res.cloudinary.com/dxfejax3u/image/upload/v1772462419/WhatsApp_Image_2026-03-02_at_7.08.01_PM_1_xybvsl.jpg",
     copy: "Cookie-cutter is boring. We love puzzles. Multiple properties? Unusual income? Commercial deal? Bring it.",
   },
 ];

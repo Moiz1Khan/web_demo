@@ -34,7 +34,7 @@ export function Testimonials() {
     <section className="py-10 md:py-14 relative overflow-hidden bg-transparent" data-reveal>
       <div className="absolute inset-0">
         <Image
-          src={images.testimonialBg}
+          src="https://res.cloudinary.com/dxfejax3u/image/upload/v1772461361/WhatsApp_Image_2026-03-02_at_7.21.57_PM_tlunpz.jpg"
           alt=""
           fill
           className="object-cover"
